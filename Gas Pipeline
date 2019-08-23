@@ -1,0 +1,39 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+#define MAX 200100
+
+int A[MAX];
+
+int main() {
+	int T;
+	long long n, a, b;
+	string s;
+	cin >> T;
+	for (int i = 0; i < T; i++) {
+		cin >> n >> a >> b; 
+		cin >> s;
+		vector<int> res;
+		long long cost = 0;
+		int pillar2num = 0;
+		
+		for (int i = 0; i < s.size() - 1; i++) {
+			if(s[i] < s[i + 1]) {
+				(!res.empty() && (b * (i - res.back()) - 2 * a) <= 0) ? res.pop_back() : res.push_back(i);
+			}
+			if(s[i] > s[i + 1]) res.push_back(i + 1);
+		}
+		
+		cost = a * (s.size() + res.size()) + b * (s.size() + 1);
+		
+		for (int i = 1; i < res.size(); i += 2) {
+			pillar2num += res[i] - res[i - 1];
+		}
+		
+		cost += pillar2num * b;
+		
+		cout << cost << "\n";
+	}
+	return 0;
+}
